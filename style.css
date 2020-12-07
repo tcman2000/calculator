@@ -1,0 +1,47 @@
+.body{
+    display: flex;
+    flex-direction: column;
+}
+
+#screen {
+    border: solid;
+    border-color: black;
+    height: 150px;
+    width: 200px;
+}
+
+#buttonpad {
+    display: flex;
+    height: 250px;
+    width: 200px;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+#specials {
+    display: flex;
+    height: 50px;
+    width: 200px;
+}
+
+.special {
+    display: flex;
+    flex-grow: 1;
+}
+
+#numpad {
+    display: grid;
+    height: 200px;
+    grid-template-columns: repeat(3, 50px);
+    grid-template-rows: repeat(3, 50px);
+}
+
+#functions {
+    display: grid;
+    grid-template-columns: 50px;
+}
+
+.num, .funct, .special {
+    border: solid;
+    border-color: black;
+}
