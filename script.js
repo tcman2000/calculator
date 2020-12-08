@@ -15,6 +15,14 @@ function divide(a,b){
     return a/b;
 }
 
+function power(a,b){
+    return Math.pow(a, b);
+}
+
+function root(a,b){
+    return Math.sqrt(a,b);
+}
+
 function operate(op, a, b) {
     let result = null;
     if(op == '+'){
@@ -25,6 +33,8 @@ function operate(op, a, b) {
         result = multiply(a,b);
     } else if (op == '/') {
         result = divide(a,b);
+    } else if (op == '^') {
+        result = power(a,b);
     }
     console.log(result);
     return result;
@@ -70,9 +80,6 @@ operators.forEach(operator => {
     operator.addEventListener('click', () => {
         let sign = operator.getAttribute('id');
         if(b !=null){
-            if(op='/' && b==0){
-                alert("why are you dividing by zero?");
-            }
             let solution = operate(op, a, b);
             display.textContent = '';
             display.appendChild(document.createTextNode(solution));
