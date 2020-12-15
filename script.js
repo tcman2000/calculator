@@ -1,3 +1,25 @@
+let display = document.querySelector('#screen');
+
+function locOfOp(equation){
+    let index = equation.indexOf('+');
+    if(index == -1){
+        index = equation.indexOf('-');
+    }
+    if(index == -1){
+        index = equation.indexOf('*');
+    }
+    if(index == -1){
+        index = equation.indexOf('/');
+    }
+    if(index == -1){
+        index = equation.indexOf('^');
+    }
+    if(index == -1){
+        index = equation.indexOf('√');
+    }
+    return index;
+}
+
 //functions
 function add(a,b){
     return (a+b);
@@ -35,87 +57,49 @@ function operate(op, a, b) {
         result = divide(a,b);
     } else if (op == '^') {
         result = power(a,b);
+    } else {
+        result = root(b,a);
     }
     console.log(result);
     return result;
 }
 
 //main
-let display = document.querySelector('#screen');
-let numbers = document.querySelectorAll('.num');
-let a = null;
-let b = null;
-let op = null;
+let operations = ['+', '-', '/', '*', '^', '√'];
 
+let numbers = document.querySelectorAll('.num');
 numbers.forEach(number => {
     number.addEventListener('click', () => {
-        let digit = parseInt(number.textContent);
-        if(op==null){
-            if(a==null){
-                a=digit;                
-            } else {
-                a = a*10 + digit;
-            }
-        } else {
-            if(b==null){
-                b=digit;
-            } else {
-                b = b*10 + digit;
-            }
-        }
-        display.appendChild(document.createTextNode(digit));
+        display.textContent += number.textContent;
     })
 })
 
 let clear = document.querySelector('#clear');
 clear.addEventListener('click', () => {
     display.textContent = '';
-    a = null;
-    b = null;
-    op = null;
+})
+
+let back = document.querySelector('#backspace');
+back.addEventListener('click', () => {
+    let equation = display.textContent;
+    display.textContent = equation.substring(0, equation.length-1);
 })
 
 let operators = document.querySelectorAll('.funct');
 operators.forEach(operator => {
     operator.addEventListener('click', () => {
-        let sign = operator.getAttribute('id');
-        if(b !=null){
-            let solution = operate(op, a, b);
-            display.textContent = '';
-            display.appendChild(document.createTextNode(solution));
-            a = solution;
-            b = null;
-            op = null;
-        }   
-        if(op == null) {
-            switch(sign){
-                case "add":
-                    op = '+';
-                    display.appendChild(document.createTextNode(op));
-                    break;
-                case "subtract":
-                    op = "-";
-                    display.appendChild(document.createTextNode(op));
-                    break;
-                case "multiply":
-                    op = "*";
-                    display.appendChild(document.createTextNode(op));
-                    break;
-                case "divide":
-                    op = "/"
-                    display.appendChild(document.createTextNode(op));
-                    break;
-                case "root":
-                    op = "√";
-                    display.appendChild(document.createTextNode(op));
-                    break;
-                case "power":
-                    op = "^";
-                    display.appendChild(document.createTextNode(op));
-                    break;
-                default:
-            }
+        let selectedOperator = operator.textContent;
+        let equation = display.textContent;
+        let opIndex = locOfOp(equation);
+        if(opIndex != -1 && opIndex != equation.length - 1){
+                let a = Number.parseInt(equation.substring(0, opIndex));
+                let op = equation.charAt(opIndex);
+                let b = Number.parseInt(equation.substring(opIndex+1, equation.length));
+                let solution = operate(op,a,b);
+                display.textContent = solution;
         }
-
+        if(selectedOperator != '='){
+            display.textContent += selectedOperator;
+        }
     })
 })
