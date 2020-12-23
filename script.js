@@ -95,8 +95,12 @@ operators.forEach(operator => {
                 let a = Number.parseInt(equation.substring(0, opIndex));
                 let op = equation.charAt(opIndex);
                 let b = Number.parseInt(equation.substring(opIndex+1, equation.length));
+                if(op=='/' && b==0){
+                    alert("Divide by Zero error");
+                } else {
                 let solution = operate(op,a,b);
                 display.textContent = solution;
+                }
         }
         if(selectedOperator != '='){
             display.textContent += selectedOperator;
